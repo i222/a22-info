@@ -1,19 +1,15 @@
 import { ItemEditor } from '@/components/item/ItemEditor'
 import { ItemList } from '@/components/item/ItemList'
+import { ItemsFilter, type ItemSortField } from '@/components/item/ItemsFilter'
+import { ItemsToolbar } from '@/components/item/ItemsToolbar'
 import { ItemView } from '@/components/item/ItemView'
-import { TagQuickFilter } from '@/components/item/TagQuickFilter'
 import { importV1SnapshotFromJson } from '@/lib/item/indexeddb/importV1'
 import { useFilteredItems, useItemStore } from '@/lib/item/store/itemStore'
 import { getItemDisplayTitle, getItemDisplayValue } from '@/models/item/helpers'
 import type { ItemInput } from '@/models/item/types'
-import Add from '@mui/icons-material/Add'
-import AssessmentOutlined from '@mui/icons-material/AssessmentOutlined'
-import ClearRounded from '@mui/icons-material/ClearRounded'
-import FileDownloadOutlined from '@mui/icons-material/FileDownloadOutlined'
-import FileUploadOutlined from '@mui/icons-material/FileUploadOutlined'
-import TimerOutlined from '@mui/icons-material/TimerOutlined'
 import {
 	Alert,
+	Box,
 	Button,
 	Card,
 	CardContent,
@@ -25,10 +21,7 @@ import {
 	DialogTitle,
 	Divider,
 	Grid,
-	IconButton,
 	Stack,
-	TextField,
-	Tooltip,
 	Typography,
 } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -65,6 +58,7 @@ export function ItemsPage() {
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [isImporting, setIsImporting] = useState(false)
 	const [importError, setImportError] = useState<string | null>(null)
+	const [itemSortField, setItemSortField] = useState<ItemSortField>('updatedAt')
 	const fileInputRef = useRef<HTMLInputElement | null>(null)
 	const [confirmState, setConfirmState] = useState<
 		{
@@ -80,6 +74,16 @@ export function ItemsPage() {
 	}, [load])
 
 	const selectedItem = useMemo(() => allItems.find((item) => item.id === selectedItemId), [allItems, selectedItemId])
+	const sortedItems = useMemo(() => {
+		return [...items].sort((a, b) => {
+			const aDate = new Date(b[itemSortField]).getTime()
+			const bDate = new Date(a[itemSortField]).getTime()
+			if (Number.isNaN(aDate) && Number.isNaN(bDate)) return 0
+			if (Number.isNaN(aDate)) return 1
+			if (Number.isNaN(bDate)) return -1
+			return aDate - bDate
+		})
+	}, [items, itemSortField])
 	const detailsHeader = editorMode === 'create' ? 'New item' : selectedItem ? getItemDisplayValue(selectedItem) : 'Details'
 	const detailsFormId = 'item-details-form'
 
@@ -195,89 +199,60 @@ export function ItemsPage() {
 					maxWidth: { md: '40%' },
 				}}
 			>
-				<Card sx={{ minHeight: 600, display: 'flex', flexDirection: 'column' }}>
-					<CardContent sx={{ flexGrow: 1 }}>
-						<Stack spacing={2}>
-							<Stack direction="row" justifyContent="space-between" alignItems="center">
-								<Typography variant="h5">Base</Typography>
-								<Stack direction="row" spacing={1} alignItems="center">
-									<input ref={fileInputRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={handleImportFileChange} />
-									<Tooltip title="Export">
-										<IconButton size="small" color="primary" onClick={handleExport} aria-label="Export items">
-											<FileDownloadOutlined fontSize="small" />
-										</IconButton>
-									</Tooltip>
-									<Tooltip title="Import">
-										<IconButton size="small" color="primary" aria-label="Import items" onClick={handleImportClick} disabled={isImporting}>
-											<FileUploadOutlined fontSize="small" />
-										</IconButton>
-									</Tooltip>
-									<Tooltip title="Reports">
-										<IconButton size="small" color="primary" aria-label="Open reports" onClick={openReportsPage}>
-											<AssessmentOutlined fontSize="small" />
-										</IconButton>
-									</Tooltip>
-									<Tooltip title="Timers">
-										<IconButton size="small" color="primary" aria-label="Open timers" onClick={openTimersPage}>
-											<TimerOutlined fontSize="small" />
-										</IconButton>
-									</Tooltip>
-									<Button
-										startIcon={<Add />}
-										variant="contained"
-										onClick={() => {
-											setSelectedItemId(null)
-											setEditorMode('create')
-										}}
-									>
-										Add
-									</Button>
-								</Stack>
-							</Stack>
-
-							<TagQuickFilter allTags={tags} value={selectedTags} onChange={setSelectedTags} />
-							<TextField
-								size="small"
-								label="Search"
-								placeholder="Search in all fields except tags"
-								value={searchQuery}
-								onChange={(event) => setSearchQuery(event.target.value)}
-								InputProps={{
-									endAdornment: searchQuery
-										? (
-											<IconButton size="small" aria-label="Clear search" onClick={() => setSearchQuery('')} edge="end">
-												<ClearRounded fontSize="small" />
-											</IconButton>
-										)
-										: undefined,
+				<Card sx={{ height: 'calc(100vh - 48px)', minHeight: 600, display: 'flex', flexDirection: 'column' }}>
+					<CardContent sx={{ flexGrow: 1, minHeight: 0 }}>
+						<Stack spacing={2} sx={{ height: '100%' }}>
+							<ItemsToolbar
+								isImporting={isImporting}
+								fileInputRef={fileInputRef}
+								onExport={handleExport}
+								onImportClick={handleImportClick}
+								onImportFileChange={handleImportFileChange}
+								onOpenReports={openReportsPage}
+								onOpenTimers={openTimersPage}
+								onAddClick={() => {
+									setSelectedItemId(null)
+									setEditorMode('create')
 								}}
+							/>
+
+							<ItemsFilter
+								searchQuery={searchQuery}
+								onSearchQueryChange={setSearchQuery}
+								allTags={tags}
+								selectedTags={selectedTags}
+								onSelectedTagsChange={setSelectedTags}
+								sortField={itemSortField}
+								onSortFieldChange={setItemSortField}
 							/>
 
 							{isLoading && <CircularProgress size={20} />}
 							{isImporting && <CircularProgress size={20} />}
 							{error && <Alert severity="error">{error}</Alert>}
 							{importError && <Alert severity="error">{importError}</Alert>}
-							<ItemList
-								items={items}
-								selectedItemId={selectedItemId}
-								selectedTags={selectedTags}
-								onView={(id) => {
-									setSelectedItemId(id)
-									setEditorMode('view')
-								}}
-								onToggleTag={(tag) => {
-									setSelectedTags(selectedTags.includes(tag) ? selectedTags.filter((value) => value !== tag) : [...selectedTags, tag])
-								}}
-								onDelete={(id) => {
-									void (async () => {
-										const item = allItems.find((candidate) => candidate.id === id)
-										const itemTitle = item ? getItemDisplayTitle(item) : '-'
-										if (await requestDeleteConfirmation(`This action cannot be undone. Delete "${itemTitle}"?`, 'Delete item?')) {
-											await deleteItem(id)
-										}
-									})()
-								}}
-							/>
+							<Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+								<ItemList
+									items={sortedItems}
+									selectedItemId={selectedItemId}
+									selectedTags={selectedTags}
+									onView={(id) => {
+										setSelectedItemId(id)
+										setEditorMode('view')
+									}}
+									onToggleTag={(tag) => {
+										setSelectedTags(selectedTags.includes(tag) ? selectedTags.filter((value) => value !== tag) : [...selectedTags, tag])
+									}}
+									onDelete={(id) => {
+										void (async () => {
+											const item = allItems.find((candidate) => candidate.id === id)
+											const itemTitle = item ? getItemDisplayTitle(item) : '-'
+											if (await requestDeleteConfirmation(`This action cannot be undone. Delete "${itemTitle}"?`, 'Delete item?')) {
+												await deleteItem(id)
+											}
+										})()
+									}}
+								/>
+							</Box>
 						</Stack>
 					</CardContent>
 				</Card>
@@ -292,7 +267,7 @@ export function ItemsPage() {
 					maxWidth: { md: '60%' },
 				}}
 			>
-				<Card sx={{ minHeight: 600, display: 'flex', flexDirection: 'column' }}>
+				<Card sx={{ height: 'calc(100vh - 48px)', minHeight: 600, display: 'flex', flexDirection: 'column' }}>
 					<CardContent sx={{ flexGrow: 1 }}>
 						<Stack spacing={2}>
 							<Stack direction="row" justifyContent="space-between" alignItems="center">
