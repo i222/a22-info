@@ -265,10 +265,11 @@ export function ItemsPage() {
 				sx={{
 					flexBasis: { md: '60%' },
 					maxWidth: { md: '60%' },
+					overflowY: 'auto',
 				}}
 			>
 				<Card sx={{ height: 'calc(100vh - 48px)', minHeight: 600, display: 'flex', flexDirection: 'column' }}>
-					<CardContent sx={{ flexGrow: 1 }}>
+					<CardContent sx={{ flexGrow: 1, overflowY: 'auto' }}>
 						<Stack spacing={2}>
 							<Stack direction="row" justifyContent="space-between" alignItems="center">
 								<Typography variant="h6">{detailsHeader}</Typography>
