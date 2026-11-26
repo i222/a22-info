@@ -1,0 +1,687 @@
+[
+  {
+    "name": "empty-query-matches",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "",
+    "expected": true
+  },
+  {
+    "name": "whitespace-query-matches",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "   ",
+    "expected": true
+  },
+  {
+    "name": "item-id-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [
+          {
+            "label": "l",
+            "value": "v"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "alpha",
+    "expected": true
+  },
+  {
+    "name": "created-at-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-15T08:30:00.000Z",
+        "updatedAt": "2026-02-20T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "2026-01-15",
+    "expected": true
+  },
+  {
+    "name": "updated-at-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-15T08:30:00.000Z",
+        "updatedAt": "2026-02-20T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "2026-02-20",
+    "expected": true
+  },
+  {
+    "name": "info-label-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [
+          {
+            "label": "qinfolabel9z",
+            "value": "v"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qinfolabel9z",
+    "expected": true
+  },
+  {
+    "name": "info-value-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [
+          {
+            "label": "lbl",
+            "value": "qinfoval7x"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qinfoval7x",
+    "expected": true
+  },
+  {
+    "name": "dt-label-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [
+          {
+            "label": "qdtlabel5y",
+            "value": 1750000000000
+          }
+        ],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qdtlabel5y",
+    "expected": true
+  },
+  {
+    "name": "dt-value-ms-string-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [
+          {
+            "label": "l",
+            "value": 1750000000000
+          }
+        ],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "1750000000000",
+    "expected": true
+  },
+  {
+    "name": "link-type-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-beta",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [
+      {
+        "id": "link-1",
+        "itemId": "item-alpha",
+        "targetId": "item-beta",
+        "type": "qreltype8w",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qreltype8w",
+    "expected": true
+  },
+  {
+    "name": "link-target-id-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-beta",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [
+      {
+        "id": "link-1",
+        "itemId": "item-alpha",
+        "targetId": "item-beta",
+        "type": "related",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "item-beta",
+    "expected": true
+  },
+  {
+    "name": "link-target-display-value-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-beta",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [
+          {
+            "label": "note",
+            "value": "n1"
+          },
+          {
+            "label": "title",
+            "value": "qtargetdisp4v"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [
+      {
+        "id": "link-1",
+        "itemId": "item-alpha",
+        "targetId": "item-beta",
+        "type": "related",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qtargetdisp4v",
+    "expected": true
+  },
+  {
+    "name": "link-target-display-starred-entry-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "item-beta",
+        "mainInfoEntryId": "33333333-3333-4333-8333-333333333333",
+        "tags": [],
+        "infoEntries": [
+          {
+            "id": "22222222-2222-4222-8222-222222222222",
+            "label": "title",
+            "value": "t"
+          },
+          {
+            "id": "33333333-3333-4333-8333-333333333333",
+            "label": "custom",
+            "value": "qstarreddisp5u"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [
+      {
+        "id": "link-1",
+        "itemId": "item-alpha",
+        "targetId": "item-beta",
+        "type": "related",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qstarreddisp5u",
+    "expected": true
+  },
+  {
+    "name": "timer-name-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "qtimername6p",
+        "baseAt": "2026-03-01T09:00:00.000Z",
+        "description": "",
+        "isActive": true,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "qtimername6p",
+    "expected": true
+  },
+  {
+    "name": "timer-baseat-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "t",
+        "baseAt": "2026-03-05T09:00:00.000Z",
+        "description": "",
+        "isActive": true,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "2026-03-05",
+    "expected": true
+  },
+  {
+    "name": "timer-description-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "t",
+        "baseAt": "2026-03-01T09:00:00.000Z",
+        "description": "qtimerdesc3k",
+        "isActive": true,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "qtimerdesc3k",
+    "expected": true
+  },
+  {
+    "name": "timer-active-keyword",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "t",
+        "baseAt": "2026-03-01T09:00:00.000Z",
+        "description": "",
+        "isActive": true,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "active",
+    "expected": true
+  },
+  {
+    "name": "timer-inactive-keyword",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "t",
+        "baseAt": "2026-03-01T09:00:00.000Z",
+        "description": "",
+        "isActive": false,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "inactive",
+    "expected": true
+  },
+  {
+    "name": "timer-link-last-checked-at-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [
+      {
+        "id": "timer-1",
+        "name": "t",
+        "baseAt": "2026-03-01T09:00:00.000Z",
+        "description": "",
+        "isActive": true,
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "itemLinks": [],
+    "itemTimerLinks": [
+      {
+        "id": "tl-1",
+        "itemId": "item-alpha",
+        "timerId": "timer-1",
+        "lastCheckedAt": "2026-07-04T13:45:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "subjectId": "item-alpha",
+    "query": "2026-07-04",
+    "expected": true
+  },
+  {
+    "name": "tags-not-searched",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [
+          "qsecrettag2m"
+        ],
+        "infoEntries": [],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qsecrettag2m",
+    "expected": false
+  },
+  {
+    "name": "case-insensitive-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [],
+        "infoEntries": [
+          {
+            "label": "lbl",
+            "value": "QCaseVal1x"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "qcaseval1x",
+    "expected": true
+  },
+  {
+    "name": "no-match",
+    "items": [
+      {
+        "id": "item-alpha",
+        "mainInfoEntryId": null,
+        "tags": [
+          "t"
+        ],
+        "infoEntries": [
+          {
+            "label": "l",
+            "value": "v"
+          }
+        ],
+        "dateTimeEntries": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "updatedAt": "2026-01-01T00:00:00.000Z"
+      }
+    ],
+    "timers": [],
+    "itemLinks": [],
+    "itemTimerLinks": [],
+    "subjectId": "item-alpha",
+    "query": "zznomatch9z",
+    "expected": false
+  }
+]

@@ -1,0 +1,773 @@
+[
+  {
+    "name": "valid-minimal",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\",\"mainInfoField\":\"title\"},{\"id\":\"i2\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"B\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"targetId\":\"i2\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[{\"id\":\"tl1\",\"itemId\":\"i1\",\"timerId\":\"t1\",\"lastCheckedAt\":\"2026-08-01T00:00:00.000Z\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": "$uuid:1",
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        },
+        {
+          "id": "i2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "B"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [
+        {
+          "id": "l1",
+          "itemId": "i1",
+          "targetId": "i2",
+          "type": "related",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemTimerLinks": [
+        {
+          "id": "tl1",
+          "itemId": "i1",
+          "timerId": "t1",
+          "lastCheckedAt": "2026-08-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "name": "version-missing-rejected",
+    "rawJson": "{\"items\":[],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[]}",
+    "expected": {
+      "rejected": true
+    }
+  },
+  {
+    "name": "version-3-rejected",
+    "rawJson": "{\"items\":[],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"3\"}}",
+    "expected": {
+      "rejected": true
+    }
+  },
+  {
+    "name": "item-missing-id-backfilled",
+    "rawJson": "{\"items\":[{\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "$uuid:2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "item-duplicate-id-skipped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"},{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"dup\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "items[1] duplicate id \"i1\", skipped duplicate."
+      ]
+    }
+  },
+  {
+    "name": "item-bad-rows-skipped",
+    "rawJson": "{\"items\":[\"garbage\",42,{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"},null],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "items[0] is not an object, skipped.",
+        "items[1] is not an object, skipped.",
+        "items[3] is not an object, skipped."
+      ]
+    }
+  },
+  {
+    "name": "timer-duplicate-id-skipped",
+    "rawJson": "{\"items\":[],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"},{\"id\":\"t1\",\"name\":\"dup\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "timers[1] duplicate id \"t1\", skipped duplicate."
+      ]
+    }
+  },
+  {
+    "name": "timer-invalid-schedule-dropped",
+    "rawJson": "{\"items\":[],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\",\"schedule\":{\"every\":1.9,\"unit\":\"days\"}},{\"id\":\"t2\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\",\"schedule\":{\"every\":1,\"unit\":\"fortnights\"}},{\"id\":\"t3\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\",\"schedule\":{\"every\":0,\"unit\":\"days\"}}],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "schedule": {
+            "every": 1,
+            "unit": "days"
+          },
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "t2",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "t3",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "timers[1] has invalid schedule, schedule removed.",
+        "timers[2] has invalid schedule, schedule removed."
+      ]
+    }
+  },
+  {
+    "name": "timer-name-falls-back-to-description",
+    "rawJson": "{\"items\":[],\"timers\":[{\"id\":\"t1\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"Pay the rent on time\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"},{\"id\":\"t2\",\"name\":\"\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Pay the rent on time",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "Pay the rent on time",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "t2",
+          "name": "Timer",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "link-missing-endpoints-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"},{\"id\":\"i2\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"},{\"id\":\"l2\",\"itemId\":\"i1\",\"targetId\":\"i2\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        },
+        {
+          "id": "i2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [
+        {
+          "id": "l2",
+          "itemId": "i1",
+          "targetId": "i2",
+          "type": "related",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemLinks[0] missing itemId or targetId, removed."
+      ]
+    }
+  },
+  {
+    "name": "link-type-defaults-related",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"},{\"id\":\"i2\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"targetId\":\"i2\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        },
+        {
+          "id": "i2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [
+        {
+          "id": "l1",
+          "itemId": "i1",
+          "targetId": "i2",
+          "type": "related",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "link-self-reference-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"targetId\":\"i1\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemLink \"l1\" removed: self-reference is not allowed."
+      ]
+    }
+  },
+  {
+    "name": "link-fk-missing-target-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"targetId\":\"ghost\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemLink \"l1\" removed: target \"ghost\" does not exist."
+      ]
+    }
+  },
+  {
+    "name": "link-duplicate-triple-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"},{\"id\":\"i2\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[{\"id\":\"l1\",\"itemId\":\"i1\",\"targetId\":\"i2\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"},{\"id\":\"l2\",\"itemId\":\"i1\",\"targetId\":\"i2\",\"type\":\"related\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        },
+        {
+          "id": "i2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [
+        {
+          "id": "l1",
+          "itemId": "i1",
+          "targetId": "i2",
+          "type": "related",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemLink \"l2\" removed: duplicate relationship."
+      ]
+    }
+  },
+  {
+    "name": "timer-link-missing-pair-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[],\"itemTimerLinks\":[{\"id\":\"tl1\",\"itemId\":\"i1\",\"lastCheckedAt\":\"2026-08-01T00:00:00.000Z\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemTimerLinks[0] missing itemId or timerId, removed."
+      ]
+    }
+  },
+  {
+    "name": "timer-link-last-checked-defaults-epoch",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[],\"itemTimerLinks\":[{\"id\":\"tl1\",\"itemId\":\"i1\",\"timerId\":\"t1\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [
+        {
+          "id": "tl1",
+          "itemId": "i1",
+          "timerId": "t1",
+          "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "name": "timer-link-fk-missing-timer-dropped",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[{\"id\":\"tl1\",\"itemId\":\"i1\",\"timerId\":\"ghost\",\"lastCheckedAt\":\"2026-08-01T00:00:00.000Z\",\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": [
+        "itemTimerLink \"tl1\" removed: timer \"ghost\" does not exist."
+      ]
+    }
+  },
+  {
+    "name": "item-bad-dates-reparsed-to-fallback",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"not-a-date\"},{\"id\":\"i2\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-08-16T12:00:00.000Z",
+          "updatedAt": "2026-08-16T12:00:00.000Z"
+        },
+        {
+          "id": "i2",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "v1-star-first-match-with-duplicate-labels",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"first\"},{\"label\":\"title\",\"value\":\"second\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\",\"mainInfoField\":\"title\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": "$uuid:1",
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "first"
+            },
+            {
+              "id": "$uuid:2",
+              "label": "title",
+              "value": "second"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "v1-star-no-match-cleared",
+    "rawJson": "{\"items\":[{\"id\":\"i1\",\"tags\":[],\"infoEntries\":[{\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\",\"mainInfoField\":\"nope\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[],\"metadata\":{\"version\":\"1\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"}}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "$uuid:1",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "v2-roundtrip-accepted",
+    "rawJson": "{\"metadata\":{\"version\":\"2\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"},\"items\":[{\"id\":\"i1\",\"mainInfoEntryId\":\"22222222-2222-4222-8222-222222222222\",\"tags\":[\"contact\"],\"infoEntries\":[{\"id\":\"11111111-1111-4111-8111-111111111111\",\"label\":\"title\",\"value\":\"A\"},{\"id\":\"22222222-2222-4222-8222-222222222222\",\"label\":\"note\",\"value\":\"n\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-02T00:00:00.000Z\"}],\"timers\":[{\"id\":\"t1\",\"name\":\"Rent\",\"baseAt\":\"2026-08-20T00:00:00.000Z\",\"description\":\"pay rent\",\"isActive\":true,\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"itemLinks\":[],\"itemTimerLinks\":[]}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": "22222222-2222-4222-8222-222222222222",
+          "tags": [
+            "contact"
+          ],
+          "infoEntries": [
+            {
+              "id": "11111111-1111-4111-8111-111111111111",
+              "label": "title",
+              "value": "A"
+            },
+            {
+              "id": "22222222-2222-4222-8222-222222222222",
+              "label": "note",
+              "value": "n"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-02T00:00:00.000Z"
+        }
+      ],
+      "timers": [
+        {
+          "id": "t1",
+          "name": "Rent",
+          "baseAt": "2026-08-20T00:00:00.000Z",
+          "description": "pay rent",
+          "isActive": true,
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  },
+  {
+    "name": "v2-star-dangling-cleared",
+    "rawJson": "{\"metadata\":{\"version\":\"2\",\"date\":\"2026-08-15T00:00:00.000Z\",\"checksum\":\"abc123\"},\"items\":[{\"id\":\"i1\",\"mainInfoEntryId\":\"33333333-3333-4333-8333-333333333333\",\"tags\":[],\"infoEntries\":[{\"id\":\"11111111-1111-4111-8111-111111111111\",\"label\":\"title\",\"value\":\"A\"}],\"dateTimeEntries\":[],\"createdAt\":\"2026-01-01T00:00:00.000Z\",\"updatedAt\":\"2026-01-01T00:00:00.000Z\"}],\"timers\":[],\"itemLinks\":[],\"itemTimerLinks\":[]}",
+    "expected": {
+      "items": [
+        {
+          "id": "i1",
+          "mainInfoEntryId": null,
+          "tags": [],
+          "infoEntries": [
+            {
+              "id": "11111111-1111-4111-8111-111111111111",
+              "label": "title",
+              "value": "A"
+            }
+          ],
+          "dateTimeEntries": [],
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "updatedAt": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "timers": [],
+      "itemLinks": [],
+      "itemTimerLinks": [],
+      "errors": []
+    }
+  }
+]

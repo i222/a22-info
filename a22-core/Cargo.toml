@@ -1,0 +1,21 @@
+[package]
+name = "a22-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Domain logic: merge, volumes, query, scan+ingest orchestration"
+
+[dependencies]
+a22-db = { path = "../a22-db" }
+base64 = { workspace = true }
+chrono = { workspace = true }
+flate2 = { workspace = true }
+rusqlite = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3"
