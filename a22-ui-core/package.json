@@ -1,0 +1,14 @@
+{
+	"name": "a22-ui-core",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@tauri-apps/api": "^2",
+		"lodash-es": "^4.17.21",
+		"zustand": "^5.0.9"
+	}
+}

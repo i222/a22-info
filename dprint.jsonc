@@ -1,0 +1,31 @@
+{
+  "indentWidth": 2,
+  "useTabs": true,
+  "lineWidth": 180,
+  "typescript": {
+    "indentWidth": 2,
+    "quoteStyle": "preferSingle",
+    "semiColons": "asi",
+    "jsx.quoteStyle": "preferDouble"
+  },
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.95.13.wasm",
+    "https://plugins.dprint.dev/json-0.21.0.wasm",
+    "https://plugins.dprint.dev/markdown-0.20.0.wasm",
+    "https://plugins.dprint.dev/toml-0.7.0.wasm",
+    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.25.3.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_graphql-v0.2.3.wasm"
+  ],
+  "includes": [
+    "a22-ui-core/src/**/*.{js,jsx,ts,tsx,json}",
+    "a22-ui-mui/src/**/*.{js,jsx,ts,tsx,json}",
+    "e2e/**/*.{js,jsx,ts,tsx,json}",
+    "package.json",
+    "a22-ui-core/package.json",
+    "a22-ui-mui/package.json",
+    "tsconfig.json",
+    "vite.config.ts",
+    "playwright.config.ts"
+  ]
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">A22 application icon</title>
+  <desc id="desc">An ivory geometric A and bright orange 22 on a midnight-blue rounded square.</desc>
+
+  <rect width="1024" height="1024" rx="160" fill="#071b3a"/>
+
+  <!-- The inner symbol is enlarged while the background stays unchanged. -->
+  <g transform="translate(512 512) scale(1.30) translate(-512 -512)" shape-rendering="geometricPrecision">
+    <path d="M398 220h88L342 758H214z" fill="#fff8ed"/>
+    <path d="M538 220h88l184 538H682z" fill="#fff8ed"/>
+    <text
+      x="512"
+      y="790"
+      fill="#ff861f"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="190"
+      font-weight="800"
+      letter-spacing="8"
+      text-anchor="middle"
+    >22</text>
+  </g>
+</svg>
