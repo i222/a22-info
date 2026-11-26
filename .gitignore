@@ -1,0 +1,66 @@
+/target/
+/native-e2e-artifacts/
+/tmp/
+/.history/
+
+# Rust and local build output
+**/*.rs.bk
+
+# Native application and test logs
+*.log
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# JavaScript dependencies and generated metadata
+node_modules/
+*.tsbuildinfo
+.vite/
+coverage/
+playwright-report/
+test-results/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100/
+.Trashes/
+.fseventsd
+.TemporaryItems/
+.apdisk
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE metadata
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.vscode/
+
+# Local SQLite profiles and sidecars
+e2e-a22.db*
+a22.db
+a22.db-wal
+a22.db-shm
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite-wal
+*.sqlite-shm
+
+# Tauri schema files under a22-app/gen/schemas are capability metadata
+# referenced by the checked-in capability files and remain versioned.
+
+# Accidental editor diagnostic names and local packaging output
+**/*:*
+/dist/
+*.dmg
+*.zip

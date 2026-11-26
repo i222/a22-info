@@ -1,0 +1,48 @@
+{
+	"files": {
+		"includes": ["**", "!build", "!target"]
+	},
+	"formatter": {
+		"lineWidth": 180,
+		"enabled": false
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"style": {
+				"useTemplate": "error"
+			},
+			"correctness": {
+				"noUnusedVariables": "off",
+				"noUnusedFunctionParameters": "off",
+				"useExhaustiveDependencies": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "warn",
+				"noImplicitAnyLet": "warn",
+				"noArrayIndexKey": "warn"
+			},
+			"a11y": "off",
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
+			}
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": false,
+			"jsxQuoteStyle": "single",
+			"quoteProperties": "asNeeded",
+			"semicolons": "always",
+			"trailingCommas": "all"
+		}
+	}
+}

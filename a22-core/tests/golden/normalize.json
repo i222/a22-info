@@ -1,0 +1,529 @@
+[
+  {
+    "name": "create-tags-trim-lowercase-uniq-drop-empty",
+    "kind": "create",
+    "input": {
+      "tags": [
+        " Contact ",
+        "contact",
+        "",
+        "   ",
+        "serbia",
+        "SERBIA"
+      ],
+      "infoEntries": [],
+      "dateTimeEntries": []
+    },
+    "expected": {
+      "tags": [
+        "contact",
+        "serbia"
+      ],
+      "infoEntries": [],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-info-entries-trim-and-drop-empty",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "label": "",
+          "value": "x"
+        },
+        {
+          "label": "title",
+          "value": "   "
+        },
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "description",
+          "value": "  keep me  "
+        },
+        {
+          "label": " fat ",
+          "value": "boxed"
+        }
+      ],
+      "dateTimeEntries": []
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "description",
+          "value": "keep me"
+        },
+        {
+          "id": "$uuid:1",
+          "label": "fat",
+          "value": "boxed"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-dt-entries-drop-invalid-and-floor",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [],
+      "dateTimeEntries": [
+        {
+          "label": "",
+          "value": 100
+        },
+        {
+          "label": "meeting",
+          "value": null
+        },
+        {
+          "label": "due",
+          "value": 1750000000000.9
+        },
+        {
+          "label": "ok",
+          "value": 1750000000000
+        }
+      ]
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [],
+      "dateTimeEntries": [
+        {
+          "label": "due",
+          "value": 1750000000000
+        },
+        {
+          "label": "ok",
+          "value": 1750000000000
+        }
+      ],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-entry-ids-kept-and-minted-mixed",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "a",
+          "value": "1"
+        },
+        {
+          "label": "b",
+          "value": "2"
+        },
+        {
+          "id": "not-a-uuid",
+          "label": "c",
+          "value": "3"
+        }
+      ],
+      "dateTimeEntries": []
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "a",
+          "value": "1"
+        },
+        {
+          "id": "$uuid:1",
+          "label": "b",
+          "value": "2"
+        },
+        {
+          "id": "$uuid:2",
+          "label": "c",
+          "value": "3"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-star-valid-id-kept",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "v"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "22222222-2222-4222-8222-222222222222"
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "v"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "22222222-2222-4222-8222-222222222222"
+    }
+  },
+  {
+    "name": "create-star-dangling-cleared",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "v"
+        },
+        {
+          "label": "",
+          "value": "ghost"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "33333333-3333-4333-8333-333333333333"
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "v"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-star-malformed-row-id-cleared",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "bad-id",
+          "label": "title",
+          "value": "v"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "bad-id"
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "$uuid:1",
+          "label": "title",
+          "value": "v"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "create-duplicate-labels-star-by-id",
+    "kind": "create",
+    "input": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "first"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "title",
+          "value": "second"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "22222222-2222-4222-8222-222222222222"
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "first"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "title",
+          "value": "second"
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "22222222-2222-4222-8222-222222222222"
+    }
+  },
+  {
+    "name": "create-empty-everything",
+    "kind": "create",
+    "input": {
+      "tags": [
+        "  "
+      ],
+      "infoEntries": [
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    },
+    "expected": {
+      "tags": [],
+      "infoEntries": [],
+      "dateTimeEntries": [],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "update-partial-tags-only",
+    "kind": "update",
+    "input": {
+      "tags": [
+        " finance ",
+        "finance"
+      ]
+    },
+    "knownEntryIds": [],
+    "expected": {
+      "tags": [
+        "finance"
+      ]
+    }
+  },
+  {
+    "name": "update-info-keeps-star-by-id",
+    "kind": "update",
+    "input": {
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "new"
+        },
+        {
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111",
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "expected": {
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "new"
+        },
+        {
+          "id": "$uuid:1",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    }
+  },
+  {
+    "name": "update-info-clears-star-when-entry-gone",
+    "kind": "update",
+    "input": {
+      "infoEntries": [
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111",
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "expected": {
+      "infoEntries": [
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "update-foreign-id-treated-as-new",
+    "kind": "update",
+    "input": {
+      "infoEntries": [
+        {
+          "id": "33333333-3333-4333-8333-333333333333",
+          "label": "x",
+          "value": "y"
+        }
+      ],
+      "mainInfoEntryId": "33333333-3333-4333-8333-333333333333"
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111"
+    ],
+    "expected": {
+      "infoEntries": [
+        {
+          "id": "$uuid:1",
+          "label": "x",
+          "value": "y"
+        }
+      ],
+      "mainInfoEntryId": null
+    }
+  },
+  {
+    "name": "update-dt-and-star-only",
+    "kind": "update",
+    "input": {
+      "dateTimeEntries": [
+        {
+          "label": "ok",
+          "value": 1750000000000.9
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111"
+    ],
+    "expected": {
+      "dateTimeEntries": [
+        {
+          "label": "ok",
+          "value": 1750000000000
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    }
+  },
+  {
+    "name": "update-star-preserved-when-entry-survives",
+    "kind": "update",
+    "input": {
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "new"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ]
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111",
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "expected": {
+      "infoEntries": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "label": "title",
+          "value": "new"
+        },
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": "11111111-1111-4111-8111-111111111111"
+    },
+    "currentStar": "11111111-1111-4111-8111-111111111111"
+  },
+  {
+    "name": "update-star-cleared-when-starred-entry-deleted",
+    "kind": "update",
+    "input": {
+      "infoEntries": [
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ]
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111",
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "expected": {
+      "infoEntries": [
+        {
+          "id": "22222222-2222-4222-8222-222222222222",
+          "label": "note",
+          "value": "n"
+        }
+      ],
+      "mainInfoEntryId": null
+    },
+    "currentStar": "11111111-1111-4111-8111-111111111111"
+  },
+  {
+    "name": "update-star-explicit-clear",
+    "kind": "update",
+    "input": {
+      "mainInfoEntryId": null
+    },
+    "knownEntryIds": [
+      "11111111-1111-4111-8111-111111111111"
+    ],
+    "expected": {
+      "mainInfoEntryId": null
+    }
+  }
+]
