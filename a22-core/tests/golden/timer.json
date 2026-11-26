@@ -1,0 +1,629 @@
+[
+  {
+    "name": "one-time-future-explicit",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-09-01T15:30:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-09-01T15:30:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "16d",
+        "nextRunAt": "2026-09-01T15:30:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-09-01T15:30:00.000Z"
+    }
+  },
+  {
+    "name": "one-time-past",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-01T15:30:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": null,
+      "lastRunAt": "2026-08-01T15:30:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 14d",
+        "nextRunAt": null,
+        "lastRunAt": "2026-08-01T15:30:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-01T15:30:00.000Z"
+    }
+  },
+  {
+    "name": "one-time-future-date-only",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-09-01T00:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-09-01T00:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "15d",
+        "nextRunAt": "2026-09-01T00:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-09-01T00:00:00.000Z"
+    }
+  },
+  {
+    "name": "inactive",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-09-01T15:30:00.000Z",
+      "description": "",
+      "isActive": false,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": null,
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "inactive",
+        "nextRunAt": null,
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-08-16T12:00:00.000Z"
+    }
+  },
+  {
+    "name": "invalid-date",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "not-a-date",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": null,
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "invalid date",
+        "nextRunAt": null,
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-08-16T12:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-hours-mid-cycle",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-16T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 2,
+        "unit": "hours"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:30:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-16T14:00:00.000Z",
+      "lastRunAt": "2026-08-16T12:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 30m",
+        "nextRunAt": "2026-08-16T14:00:00.000Z",
+        "lastRunAt": "2026-08-16T12:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T12:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-days",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T09:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 3,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-19T09:00:00.000Z",
+      "lastRunAt": "2026-08-16T09:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 3h",
+        "nextRunAt": "2026-08-19T09:00:00.000Z",
+        "lastRunAt": "2026-08-16T09:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T09:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-weeks",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-03T06:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "weeks"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T06:00:00.000Z",
+      "lastRunAt": "2026-08-10T06:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 6d",
+        "nextRunAt": "2026-08-17T06:00:00.000Z",
+        "lastRunAt": "2026-08-10T06:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-10T06:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-months-overflow-jan31",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-01-31T10:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "months"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-04-15T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-05-03T09:00:00.000Z",
+      "lastRunAt": "2026-04-03T09:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 12d",
+        "nextRunAt": "2026-05-03T09:00:00.000Z",
+        "lastRunAt": "2026-04-03T09:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-04-03T09:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-months-overflow-leap-feb",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2024-01-31T10:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "months"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2024-03-15T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2024-04-02T09:00:00.000Z",
+      "lastRunAt": "2024-03-02T10:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 13d",
+        "nextRunAt": "2024-04-02T09:00:00.000Z",
+        "lastRunAt": "2024-03-02T10:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2024-03-02T10:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-years-leap-day-overflow",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2024-02-29T10:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "years"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-03-01T00:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-03-01T10:00:00.000Z",
+      "lastRunAt": "2025-03-01T10:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 364d",
+        "nextRunAt": "2026-03-01T10:00:00.000Z",
+        "lastRunAt": "2025-03-01T10:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2025-03-01T10:00:00.000Z"
+    }
+  },
+  {
+    "name": "periodic-before-base",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-09-01T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-09-01T08:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "15d",
+        "nextRunAt": "2026-09-01T08:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-09-01T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "status-red-overdue",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-12T09:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 4h",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "status-blue-prechecked",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-16T09:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "blue",
+        "label": "20h prechecked",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "status-yellow-soon-never-ran",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-17T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T10:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "yellow",
+        "label": "22h soon",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-08-17T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "status-green-ran-far-next",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 3,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-16T08:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-19T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "green",
+        "label": "2d",
+        "nextRunAt": "2026-08-19T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-19T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "status-muted-never-ran-far-next",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-12-01T10:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-12-01T10:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "106d",
+        "nextRunAt": "2026-12-01T10:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-12-01T10:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-red",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-12T09:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 4h",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-blue-cancels-precheck",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 1,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-16T09:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "blue",
+        "label": "20h prechecked",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-16T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-yellow-prechecks-next",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-17T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T10:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-17T08:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "yellow",
+        "label": "22h soon",
+        "nextRunAt": "2026-08-17T08:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-08-17T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-green-prechecks-next",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-10T08:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "schedule": {
+        "every": 3,
+        "unit": "days"
+      },
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "2026-08-16T08:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-08-19T08:00:00.000Z",
+      "lastRunAt": "2026-08-16T08:00:00.000Z",
+      "status": {
+        "visualState": "green",
+        "label": "2d",
+        "nextRunAt": "2026-08-19T08:00:00.000Z",
+        "lastRunAt": "2026-08-16T08:00:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-19T08:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-muted-prechecks-next",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-12-01T10:00:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": "2026-12-01T10:00:00.000Z",
+      "lastRunAt": null,
+      "status": {
+        "visualState": "muted",
+        "label": "106d",
+        "nextRunAt": "2026-12-01T10:00:00.000Z",
+        "lastRunAt": null
+      },
+      "cycleNextCheckedAt": "2026-12-01T10:00:00.000Z"
+    }
+  },
+  {
+    "name": "cycle-from-past-one-time-falls-back-to-now",
+    "timer": {
+      "id": "timer-t",
+      "name": "Timer",
+      "baseAt": "2026-08-01T15:30:00.000Z",
+      "description": "",
+      "isActive": true,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "lastCheckedAt": "1970-01-01T00:00:00.000Z",
+    "now": "2026-08-16T12:00:00.000Z",
+    "expected": {
+      "nextRunAt": null,
+      "lastRunAt": "2026-08-01T15:30:00.000Z",
+      "status": {
+        "visualState": "red",
+        "label": "late 14d",
+        "nextRunAt": null,
+        "lastRunAt": "2026-08-01T15:30:00.000Z"
+      },
+      "cycleNextCheckedAt": "2026-08-01T15:30:00.000Z"
+    }
+  }
+]

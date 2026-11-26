@@ -1,0 +1,19 @@
+[package]
+name = "a22-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "a22 desktop app (Tauri shell)"
+
+[lib]
+name = "a22_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+a22-core = { path = "../a22-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tauri = { version = "2", features = [] }

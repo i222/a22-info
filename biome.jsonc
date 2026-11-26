@@ -1,6 +1,6 @@
 {
 	"files": {
-		"includes": ["**", "!build"]
+		"includes": ["**", "!build", "!target"]
 	},
 	"formatter": {
 		"lineWidth": 180,
@@ -15,10 +15,10 @@
 			"correctness": {
 				"noUnusedVariables": "off",
 				"noUnusedFunctionParameters": "off",
-				 "useExhaustiveDependencies": "warn"
+				"useExhaustiveDependencies": "warn"
 			},
 			"suspicious": {
-				"noExplicitAny": "warn", // ts already show it
+				"noExplicitAny": "warn",
 				"noImplicitAnyLet": "warn",
 				"noArrayIndexKey": "warn"
 			},
